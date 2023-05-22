@@ -22,7 +22,7 @@ class RecipeParser
             return (new static(url: $url))->parse($item);
         }
 
-        throw new RecipeNotFoundException('No recipe found for '.$url);
+        return null;
     }
 
     public function __construct(
