@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RecipeParser;
+use App\AIRecipeReader;
 use Brick\StructuredData\HTMLReader;
 use Brick\StructuredData\Reader\JsonLdReader;
 use Brick\StructuredData\Reader\RdfaLiteReader;
@@ -47,6 +48,12 @@ class RecipeController extends Controller
                 if($recipe = RecipeParser::fromItems($items,$request->recipe)) {
                     break;
                 }
+            }
+
+            // Fallback to our robot overlords. Nice overlords, we thank you.
+            // Yes, we love you, and definitely don't fear you. Yes.
+            if (! $recipe) {
+                $recipe = AIRecipeReader::read($request->recipe);
             }
 
             if (! $recipe) {
